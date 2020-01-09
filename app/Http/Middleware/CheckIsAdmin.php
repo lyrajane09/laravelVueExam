@@ -15,7 +15,7 @@ class CheckIsAdmin
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->user_role_id === 1){
+        if(\Auth::user()->user_role_id === 1){
             return $next($request);
         }else{
             return response()->json(['error' => 'Unauthorized'], 403);

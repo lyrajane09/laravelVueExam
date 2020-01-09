@@ -17,7 +17,12 @@ Route::prefix('auth')->group(function () {
     Route::post('login', 'AuthController@login');
     Route::get('refresh', 'AuthController@refresh');
     Route::group(['middleware' => 'auth:api'], function(){
-        Route::get('user', 'AuthController@user')->middleware('isAdmin');
+        Route::get('user', 'AuthController@user');
+        Route::get('dashboard', 'AdminController@index');
+        Route::get('roles', 'AdminController@roles')->middleware('isAdmin');
+        Route::get('users', 'AdminController@users')->middleware('isAdmin');
+        Route::post('add-role', 'AdminController@addRole')->middleware('isAdmin');
+        Route::post('add-user', 'AdminController@addUser')->middleware('isAdmin');
         Route::post('logout', 'AuthController@logout');
     });
 });

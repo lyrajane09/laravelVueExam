@@ -4,7 +4,7 @@
             <div class="card-header">Login</div>
             <div class="card-body">
                 <div class="alert alert-danger" v-if="has_error">
-                    <p>error!</p>
+                    <p>Incorrect Password/Username</p>
                 </div>
                 <form autocomplete="off" @submit.prevent="login" method="post">
                     <div class="form-group">
@@ -35,9 +35,7 @@
     },
     methods: {
       login() {
-         
         // get the redirect object
-        var redirect = this.$auth.redirect()
         var app = this
         this.$auth.login({
           params: {
@@ -46,8 +44,8 @@
           },
           success: function() {
             // handle redirection
-            const redirectTo = redirect ? redirect.from.name : this.$auth.user().user_role_id === 1 ? 'admin.dashboard' : 'dashboard'
-            this.$router.push({name: redirectTo})
+            app.has_error = false
+            location.href = '/portal/dashboard';
           },
           error: function() {
             app.has_error = true
@@ -55,17 +53,6 @@
           rememberMe: true,
           fetchUser: true
         })
-
-        // this.$http.post('http://localhost:3000/api/auth/login', {
-        //     email: this.email,
-        //     password: this.password,
-        // }, function (data, status, request) {
-        //     this.postResults = data;
-    
-        //     this.ajaxRequest = false;
-        // });
-
-
       }
     }
   }
